@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Characters/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sounds/slip.wav" type="AudioStream" id=2]
+[ext_resource path="res://Characters/Enemy.cs" type="Script" id=3]
+[ext_resource path="res://Assets/SnowflakeIce.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sounds/defrosting2.ogg" type="AudioStream" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "frozen"
+length = 1.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("FrozenSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.2
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04, 0.08, 0.12, 0.16 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 1.8
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[node name="Enemy" instance=ExtResource( 1 )]
+pause_mode = 1
+position = Vector2( 0, 0 )
+collision_layer = 4
+collision_mask = 10
+script = ExtResource( 3 )
+DefaultPrice = 5
+GoodPrice = 1
+BadPrice = 27
+
+[node name="Sprite" parent="." index="0"]
+hframes = 5
+vframes = 2
+frame = 4
+
+[node name="AnimationPlayer" parent="." index="2"]
+autoplay = "idle"
+anims/frozen = SubResource( 1 )
+anims/go = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
+[node name="Slip" type="AudioStreamPlayer" parent="." index="8"]
+stream = ExtResource( 2 )
+
+[node name="FrozenSprite" type="Sprite" parent="." index="9"]
+texture = ExtResource( 4 )
+hframes = 3
+frame = 2
+
+[node name="Defrosting" type="AudioStreamPlayer" parent="." index="10"]
+stream = ExtResource( 5 )
+
+[connection signal="tween_completed" from="MoveTween" to="." method="IceSlip"]
