@@ -1,0 +1,129 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Fonts/gomarice_no_continue.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Screens/Results.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 70
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "start"
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventAction" id=5]
+action = "start"
+
+[sub_resource type="ShortCut" id=6]
+shortcut = SubResource( 5 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "back"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[node name="Results" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="Results" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Results"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -320.0
+margin_right = 512.0
+margin_bottom = 320.0
+color = Color( 0.172549, 0.764706, 0.737255, 0.509804 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Results"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Results"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -350.0
+margin_top = -116.0
+margin_right = 350.0
+margin_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Results/VBoxContainer"]
+margin_top = 26.0
+margin_right = 772.0
+margin_bottom = 126.0
+custom_fonts/font = SubResource( 1 )
+text = "You win!"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Results/VBoxContainer"]
+margin_top = 130.0
+margin_right = 772.0
+margin_bottom = 206.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 7
+alignment = 1
+
+[node name="Restart" type="Button" parent="Results/VBoxContainer/HBoxContainer"]
+visible = false
+margin_right = 208.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 2 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 4 )
+text = "Restart"
+
+[node name="NextLevel" type="Button" parent="Results/VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 106.0
+margin_right = 398.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 2 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 6 )
+text = "Next level"
+
+[node name="Menu" type="Button" parent="Results/VBoxContainer/HBoxContainer"]
+margin_left = 254.0
+margin_right = 518.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 2 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 8 )
+text = "Main menu"
+
+[connection signal="pressed" from="Results/VBoxContainer/HBoxContainer/Restart" to="." method="Restart"]
+[connection signal="pressed" from="Results/VBoxContainer/HBoxContainer/NextLevel" to="." method="NextLevel"]
+[connection signal="pressed" from="Results/VBoxContainer/HBoxContainer/Menu" to="." method="Menu"]

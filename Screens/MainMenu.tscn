@@ -1,0 +1,101 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Screens/Backgrounds/Menu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Buttons/ButtonPlay.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Buttons/ButtonQuit.png" type="Texture" id=3]
+[ext_resource path="res://Screens/MainMenu.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Buttons/ButtonPlayHovered.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Buttons/ButtonQuitHovered.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Buttons/ButtonLevelSelect.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Buttons/ButtonLevelSelectHovered.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Buttons/ButtonHowToPlayHovered.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Buttons/ButtonHowToPlay.png" type="Texture" id=10]
+
+[sub_resource type="InputEventAction" id=1]
+action = "right"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="." instance=ExtResource( 1 )]
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -224.0
+margin_top = -120.0
+margin_right = 35.0
+margin_bottom = 77.0
+rect_scale = Vector2( 1.61636, 1.43253 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="TextureButton" parent="Buttons"]
+margin_right = 259.0
+margin_bottom = 46.0
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 5 )
+expand = true
+stretch_mode = 5
+
+[node name="SelectLevel" type="TextureButton" parent="Buttons"]
+margin_top = 50.0
+margin_right = 259.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut_in_tooltip = false
+shortcut = SubResource( 2 )
+texture_normal = ExtResource( 7 )
+texture_hover = ExtResource( 8 )
+texture_focused = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+
+[node name="Controls" type="TextureButton" parent="Buttons"]
+margin_top = 100.0
+margin_right = 259.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 10 )
+texture_hover = ExtResource( 9 )
+texture_focused = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+
+[node name="Quit" type="TextureButton" parent="Buttons"]
+margin_top = 150.0
+margin_right = 259.0
+margin_bottom = 197.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 6 )
+texture_focused = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+
+[connection signal="pressed" from="Buttons/Play" to="." method="Play"]
+[connection signal="pressed" from="Buttons/SelectLevel" to="." method="SelectLevel"]
+[connection signal="pressed" from="Buttons/Controls" to="." method="Controls"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="Quit"]
