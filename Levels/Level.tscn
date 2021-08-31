@@ -1,0 +1,108 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/Tiles/Wall.tres" type="TileSet" id=1]
+[ext_resource path="res://Levels/Level.cs" type="Script" id=2]
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/Trophy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Tiles/Ground.tres" type="TileSet" id=5]
+[ext_resource path="res://UI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Screens/Results.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Characters/EnemyGoal.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Sounds/move.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/win.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/lose2.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/bg_bog.wav" type="AudioStream" id=12]
+[ext_resource path="res://Tutorial.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Assets/Particles/Frozen Lake.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sounds/bg_lake.wav" type="AudioStream" id=15]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 256, 150, 0 )
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+angular_velocity = 20.0
+orbit_velocity = 0.01
+orbit_velocity_random = 0.0
+linear_accel = 10.0
+scale = 0.5
+
+[node name="00" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+GroundTiles = 100
+
+[node name="Ground" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65536, 0, 0, 65543, 0, 0, 131072, 0, 0, 131079, 0, 0, 196608, 0, 0, 196615, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0 )
+
+[node name="Wall" type="TileMap" parent="."]
+z_index = 1
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 9, 0, 1, 3, 0, 2, 3, 0, 3, 3, 0, 4, 3, 0, 5, 3, 0, 6, 3, 0, 7, 8, 0, 65536, 5, 0, 65543, 5, 0, 131072, 6, 0, 131079, 6, 0, 196608, 10, 0, 196615, 10, 0, 262144, 2, 0, 262145, 3, 0, 262146, 3, 0, 262147, 3, 0, 262148, 3, 0, 262149, 3, 0, 262150, 3, 0, 262151, 4, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 256, 160 )
+z_index = 3
+
+[node name="Trophy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 256, 160 )
+collision_mask = 6
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="UI" parent="Camera2D" instance=ExtResource( 6 )]
+
+[node name="Tutorial" parent="Camera2D" instance=ExtResource( 13 )]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="EnemyGoal" parent="Enemies" instance=ExtResource( 8 )]
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Results" parent="." instance=ExtResource( 7 )]
+
+[node name="Move" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -23.0
+pitch_scale = 2.0
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -15.0
+pitch_scale = 0.8
+
+[node name="Lose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -10.0
+pitch_scale = 0.8
+
+[node name="BG_Swamp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -25.0
+pitch_scale = 1.3
+
+[node name="BG_Snow" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = 10.0
+
+[node name="Particles" type="Node" parent="."]
+
+[node name="Snow" type="Particles2D" parent="Particles"]
+visible = false
+position = Vector2( 256, 160 )
+z_index = 2
+amount = 300
+lifetime = 5.0
+process_material = SubResource( 1 )
+texture = ExtResource( 14 )
+
+[connection signal="Done" from="Camera2D/Tutorial" to="Player" method="Activate"]
+[connection signal="timeout" from="EnemyTimer" to="." method="MoveEnemies"]
